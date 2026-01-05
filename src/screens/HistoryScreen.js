@@ -102,6 +102,15 @@ const HistoryScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     )}
                 </View>
+
+                {/* Dashboard Shortcut */}
+                <TouchableOpacity
+                    style={styles.statsButton}
+                    onPress={() => navigation.navigate('MainTabs', { screen: 'DashboardTab' })}
+                >
+                    <Ionicons name="stats-chart" size={18} color={COLORS.primary} />
+                    <Text style={styles.statsButtonText}>Voir les statistiques</Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.filters}>
@@ -167,6 +176,23 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 10,
         height: '100%',
+    },
+    statsButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 12,
+        padding: 10,
+        backgroundColor: '#EEF2FF',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: COLORS.primary,
+    },
+    statsButtonText: {
+        color: COLORS.primary,
+        fontWeight: '600',
+        marginLeft: 8,
+        fontSize: 14,
     },
     filters: {
         flexDirection: 'row',
