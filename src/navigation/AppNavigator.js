@@ -7,12 +7,13 @@ import {
     HomeScreen,
     CRIProjetScreen,
     CRIServiceScreen,
-    HistoryScreen
+    HistoryScreen,
+    AdminScreen
 } from '../screens';
 
 const Stack = createStackNavigator();
 
-const AppNavigator = () => {
+const AppNavigator = ({ extraData }) => {
     return (
         <NavigationContainer>
             <Stack.Navigator
@@ -30,9 +31,9 @@ const AppNavigator = () => {
             >
                 <Stack.Screen
                     name="Home"
-                    component={HomeScreen}
-                    options={{ title: 'Accueil' }}
-                />
+                >
+                    {(props) => <HomeScreen {...props} extraData={extraData} />}
+                </Stack.Screen>
                 <Stack.Screen
                     name="CRIProjet"
                     component={CRIProjetScreen}
@@ -47,6 +48,11 @@ const AppNavigator = () => {
                     name="History"
                     component={HistoryScreen}
                     options={{ title: 'Historique' }}
+                />
+                <Stack.Screen
+                    name="Admin"
+                    component={AdminScreen}
+                    options={{ title: 'Administration', headerShown: true }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

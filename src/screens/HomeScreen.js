@@ -1,9 +1,47 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Alert } from 'react-native';
 import { COLORS, GLOBAL_STYLES, CRI_TYPES } from '../utils/constants';
 import { Ionicons } from '@expo/vector-icons';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, extraData }) => {
+    // Extract user email and logout function from extraData
+    // Note: extraData is passed from AppNavigator where we injected it
+    const { userEmail, handleLogout } = extraData || {};
+
+    const onLogoutPress = () => {
+        Alert.alert(
+            "Déconnexion",
+            "Êtes-vous sûr de vouloir vous déconnecter ?",
+            [
+                { text: "Annuler", style: "cancel" },
+                {
+                    text: "Se déconnecter",
+                    style: "destructive",
+                    onPress: () => {
+                        if (handleLogout) handleLogout();
+                    }
+                }
+            ]
+        );
+    };
+
+    // Add logout button to header dynamically
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity onPress={onLogoutPress} style={{ marginRight: 15 }}>
+                    <Ionicons name="log-out-outline" size={24} color="#FF3B30" />
+                </TouchableOpacity>
+            ),
+            headerTitle: userEmail ? () => (
+                <View>
+                    <Text style={{ color: COLORS.white, fontWeight: 'bold', fontSize: 16 }}>Accueil</Text>
+                    <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10 }}>{userEmail}</Text>
+                </View>
+            ) : 'Accueil'
+        });
+    }, [navigation, userEmail]);
+
     return (
         <View style={[GLOBAL_STYLES.container, styles.container]}>
             <View style={styles.header}>
@@ -57,6 +95,7 @@ const HomeScreen = ({ navigation }) => {
 
             <View style={styles.footer}>
                 <Text style={styles.version}>Version 1.0.0 MVP</Text>
+                {userEmail && <Text style={styles.userEmail}>Connecté en tant que: {userEmail}</Text>}
             </View>
         </View>
     );
