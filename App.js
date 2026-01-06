@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'; // Must be at the top
 import React, { useState, useEffect } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import AppNavigator from './src/navigation/AppNavigator';
 import LoginScreen from './src/screens/LoginScreen';
+import LoadingAnimation from './src/components/LoadingAnimation';
 
 const Stack = createStackNavigator();
 
@@ -64,11 +65,7 @@ export default function App() {
     };
 
     if (isLoading) {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size="large" color="#0066CC" />
-            </View>
-        );
+        return <LoadingAnimation />;
     }
 
     return (

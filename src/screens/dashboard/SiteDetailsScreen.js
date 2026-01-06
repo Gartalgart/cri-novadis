@@ -50,7 +50,7 @@ const SiteDetailsScreen = ({ route, navigation }) => {
     // Pie Chart Data
     const pieData = stats.types.map((t, i) => ({
         name: t.name.replace('_', ' '),
-        population: t.value,
+        value: t.value,
         color: ['#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'][i % 5],
         legendFontColor: '#7F7F7F',
         legendFontSize: 12

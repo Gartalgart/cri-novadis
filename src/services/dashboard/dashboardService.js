@@ -196,7 +196,7 @@ export const dashboardService = {
                 types[i.intervention_type] = (types[i.intervention_type] || 0) + 1;
             });
             const typeDistribution = Object.keys(types).map(key => ({
-                name: key,
+                name: key ? key : 'Inconnu',
                 value: types[key],
                 color: '#4F46E5', // Will be overridden by helper
                 legendFontColor: '#7F7F7F',
