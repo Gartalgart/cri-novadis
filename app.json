@@ -10,6 +10,20 @@
         ],
         "ios": {
             "supportsTablet": true
+        },
+        "web": {
+            "favicon": "./public/favicon.ico",
+            "bundler": "metro",
+            "name": "NOVADIS CRI",
+            "shortName": "NOVADIS",
+            "lang": "fr",
+            "scope": "/",
+            "themeColor": "#0066CC",
+            "backgroundColor": "#FFFFFF",
+            "display": "standalone",
+            "orientation": "portrait",
+            "startUrl": "/",
+            "description": "Application de gestion des interventions techniques"
         }
     }
 }
