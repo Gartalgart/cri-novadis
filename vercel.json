@@ -10,31 +10,39 @@
             }
         }
     ],
-    "routes": [
+    "headers": [
         {
-            "src": "/service-worker.js",
-            "headers": {
-                "cache-control": "public, max-age=0, must-revalidate"
-            },
-            "dest": "/service-worker.js"
+            "source": "/service-worker.js",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=0, must-revalidate"
+                }
+            ]
         },
         {
-            "src": "/manifest.json",
-            "headers": {
-                "content-type": "application/json"
-            },
-            "dest": "/manifest.json"
+            "source": "/manifest.json",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                }
+            ]
         },
         {
-            "src": "/static/(.*)",
-            "headers": {
-                "cache-control": "public, max-age=31536000, immutable"
-            },
-            "dest": "/static/$1"
-        },
+            "source": "/_expo/static/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        }
+    ],
+    "rewrites": [
         {
-            "src": "/(.*)",
-            "dest": "/index.html"
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ]
 }
