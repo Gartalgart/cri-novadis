@@ -121,6 +121,8 @@ const LoginScreen = ({ onLoginSuccess }) => {
             const code = Math.floor(100000 + Math.random() * 900000).toString();
             setGeneratedCode(code);
 
+            console.log(code);
+
             // Set expiration
             const expiry = new Date(new Date().getTime() + CODE_EXPIRY_DURATION);
             setCodeExpiry(expiry);
