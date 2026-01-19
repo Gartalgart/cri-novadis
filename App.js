@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler'; // Must be at the top
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -69,41 +70,43 @@ export default function App() {
     }
 
     return (
-        <SafeAreaProvider>
-            {/* 
-               We wrap everything in NavigationContainer here if AppNavigator doesn't already have one.
-               However, looking at AppNavigator.js, it ALREADY has a NavigationContainer.
-               To properly integrate login, we should pass the auth state TO AppNavigator 
-               or simply conditionally render either LoginScreen OR AppNavigator.
-               
-               Given that AppNavigator likely handles inner stack navigation, 
-               conditionally rendering it is the cleanest approach here 
-               without rewriting the entire AppNavigator.
-            */}
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <SafeAreaProvider>
+                {/* 
+                   We wrap everything in NavigationContainer here if AppNavigator doesn't already have one.
+                   However, looking at AppNavigator.js, it ALREADY has a NavigationContainer.
+                   To properly integrate login, we should pass the auth state TO AppNavigator 
+                   or simply conditionally render either LoginScreen OR AppNavigator.
+                   
+                   Given that AppNavigator likely handles inner stack navigation, 
+                   conditionally rendering it is the cleanest approach here 
+                   without rewriting the entire AppNavigator.
+                */}
 
-            {!isAuthenticated ? (
-                <LoginScreen onLoginSuccess={handleLoginSuccess} />
-            ) : (
-                <AppNavigator
-                    // You might want to pass these down if needed, 
-                    // though usually Context is better for global state.
-                    // For now, we'll attach logout to the initial params of the screens inside AppNavigator
-                    // But since AppNavigator is a component, we can't easily pass props *into* its screens 
-                    // without Context or modifying AppNavigator.
-                    // 
-                    // For this step, we will Modify AppNavigator in the next step or 
-                    // ensure screens can access logout via a simple prop drilling workaround 
-                    // or just updating AppNavigator to accept screenProps (deprecated) or Context.
-                    //
-                    // To keep it simple and follow requirements: 
-                    // The requirement says "add logout to HomeScreen". 
-                    // We'll pass a Context Provider or just let AppNavigator handle it.
-                    // Let's pass the logout handler as a prop to AppNavigator so it can pass it down.
-                    extraData={{ userEmail, handleLogout }}
-                />
-            )}
+                {!isAuthenticated ? (
+                    <LoginScreen onLoginSuccess={handleLoginSuccess} />
+                ) : (
+                    <AppNavigator
+                        // You might want to pass these down if needed, 
+                        // though usually Context is better for global state.
+                        // For now, we'll attach logout to the initial params of the screens inside AppNavigator
+                        // But since AppNavigator is a component, we can't easily pass props *into* its screens 
+                        // without Context or modifying AppNavigator.
+                        // 
+                        // For this step, we will Modify AppNavigator in the next step or 
+                        // ensure screens can access logout via a simple prop drilling workaround 
+                        // or just updating AppNavigator to accept screenProps (deprecated) or Context.
+                        //
+                        // To keep it simple and follow requirements: 
+                        // The requirement says "add logout to HomeScreen". 
+                        // We'll pass a Context Provider or just let AppNavigator handle it.
+                        // Let's pass the logout handler as a prop to AppNavigator so it can pass it down.
+                        extraData={{ userEmail, handleLogout }}
+                    />
+                )}
 
-            <StatusBar style="light" />
-        </SafeAreaProvider>
+                <StatusBar style="light" />
+            </SafeAreaProvider>
+        </GestureHandlerRootView>
     );
 }
